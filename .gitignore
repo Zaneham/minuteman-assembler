@@ -1,0 +1,14 @@
+# Build artifacts
+*.o
+*.exe
+*.bin
+*.out
+
+# Editor files
+*.swp
+*~
+.vscode/
+
+# We're not committing the executable
+# Build it yourself. It's character building.
+d17b-asm
