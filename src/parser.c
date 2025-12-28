@@ -220,16 +220,11 @@ static int process_line(asm_state_t *state, const char *line, bool pass2) {
         return 0;  /* End of assembly */
     }
 
-    /* Look up instruction */
-    const instr_t *instr = find_instruction(tokens[idx].text);
+    /* Look up instruction - mode-aware for TMI and other dual-encoding instructions */
+    const instr_t *instr = find_instruction(tokens[idx].text, state->d37c_mode);
     if (instr == NULL) {
-        asm_error(state, "Unknown instruction '%s'", tokens[idx].text);
-        return -1;
-    }
-
-    /* Check D37C restriction */
-    if (instr->d37c_only && !state->d37c_mode) {
-        asm_error(state, "Instruction '%s' requires D37C mode (-37)", tokens[idx].text);
+        asm_error(state, "Unknown instruction '%s'%s", tokens[idx].text,
+                  state->d37c_mode ? "" : " (D37C-only instruction?)");
         return -1;
     }
 

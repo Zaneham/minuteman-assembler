@@ -12,3 +12,6 @@
 # We're not committing the executable
 # Build it yourself. It's character building.
 d17b-asm
+
+# Internal notes - not for public consumption
+ACCURACY.md

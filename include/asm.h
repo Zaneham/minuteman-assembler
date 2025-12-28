@@ -53,13 +53,25 @@ typedef enum {
     ITYPE_IMPLIED       /* No operands */
 } instr_type_t;
 
+/*
+ * Machine compatibility
+ * Some instructions exist on both machines but with different opcodes.
+ * TMI is the notable example: opcode 010 on D17B, opcode 030 on D37C.
+ * The D37C repurposed opcode 010 for TZE (Transfer on Zero).
+ */
+typedef enum {
+    MACH_BOTH,          /* Available on both, same encoding */
+    MACH_D17B_ONLY,     /* D17B only - not available on D37C */
+    MACH_D37C_ONLY      /* D37C only - not available on D17B */
+} mach_compat_t;
+
 /* Instruction table entry */
 typedef struct {
     const char *mnemonic;
     uint8_t     opcode;         /* Primary opcode (octal in docs) */
     uint8_t     subcode;        /* Secondary code for 40-class instructions */
     instr_type_t type;
-    bool        d37c_only;      /* Only available on D37C */
+    mach_compat_t compat;       /* Which machine(s) this encoding is for */
 } instr_t;
 
 /* Symbol (label) entry */
@@ -127,8 +139,8 @@ int asm_pass1(asm_state_t *state, const char *filename);
 int asm_pass2(asm_state_t *state, const char *filename);
 int asm_write_output(asm_state_t *state, const char *filename);
 
-/* Instruction lookup */
-const instr_t *find_instruction(const char *mnemonic);
+/* Instruction lookup - mode-aware to handle TMI and other dual-encoding instructions */
+const instr_t *find_instruction(const char *mnemonic, bool d37c_mode);
 
 /* Symbol table */
 symbol_t *find_symbol(asm_state_t *state, const char *name);
