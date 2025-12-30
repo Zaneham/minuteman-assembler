@@ -156,6 +156,12 @@ If writing assembly for nuclear missile guidance computers has left you wanting 
 
 - **[HAL/S LSP](https://github.com/Zaneham/hals-lsp)** — NASA's Space Shuttle language. For when you'd rather go to space than through it at Mach 23.
 
+## Contact
+
+Found a bug? Have questions about D17B instruction encoding? Work on systems that trace their lineage back to 1962 and can't believe someone actually documented this?
+
+zanehambly@gmail.com — I promise not to ask why you need an assembler for nuclear missile guidance computers.
+
 ## Licence
 
 Copyright 2025 Zane Hambly
